@@ -24,7 +24,6 @@ class Builder
         ];
 
         if ($this->config['auth']['enabled'] ?? false) {
-            $collection['auth'] = $this->authBuilder->buildCollectionAuth($this->config['auth']);
             $collection['variable'] = array_merge(
                 $variables,
                 $this->authBuilder->buildAuthVariables($this->config['auth'])

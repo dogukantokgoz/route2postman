@@ -75,13 +75,22 @@ class RouteAnalyzer implements RouteAnalyzerInterface
 
             $formRequest = $formRequestType ? new $formRequestType() : null;
 
+            // Get only route-specific middleware (not global or group middleware)
+            // getAction('middleware') returns only middleware directly assigned to the route
+            $routeMiddleware = $route->getAction('middleware') ?? [];
+            
+            // Convert to array if it's not already an array
+            if (!is_array($routeMiddleware)) {
+                $routeMiddleware = $routeMiddleware ? [$routeMiddleware] : [];
+            }
+            
             return new RouteInfoDto(
                 uri: $route->uri(),
                 methods: $route->methods(),
                 controller: $route->getControllerClass(),
                 action: $route->getActionMethod(),
                 formRequest: $formRequest,
-                middleware: $route->gatherMiddleware(),
+                middleware: $routeMiddleware,
                 isProtected: $this->requiresAuthentication($route)
             );
         } catch (UnsupportedRouteException $e) {

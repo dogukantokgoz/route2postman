@@ -46,7 +46,31 @@ return [
             'key_value' => 'your-api-key-here',
         ],
 
-        'protected_middleware' => ['auth', 'auth:api', 'auth:sanctum'],
+        'protected_middleware' => ['auth', 'auth:api', 'auth:sanctum', 'jwt.auth'],
+
+        'excluded_routes' => [
+            // Authentication routes
+            'login',
+            'register',
+            'auth/google',
+            'auth/facebook',
+
+            // Password reset routes
+            'password-reset',
+            'password/reset',
+            'password/email',
+            '/password/reset',
+            'forgot-password',
+            'forgotpassword',
+            'reset-password',
+            'resetpassword',
+
+            // Email verification routes
+            'email/verify',
+            'email/resend',
+            '/email/verify',
+            '/email/resend',
+        ],
     ],
 
     'headers' => [
